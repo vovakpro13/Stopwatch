@@ -1,6 +1,6 @@
 {
   "name": "stopwatch",
-  "homepage": "https://andrij-nalyvayko.github.io/Stopwatch/",
+  "homepage": "https://andrij-nalyvayko.github.io/Stopwatch",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b develop",
+    "deploy": "gh-pages -b build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
