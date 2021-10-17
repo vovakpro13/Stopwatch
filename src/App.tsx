@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import Display from './Display';
+import Buttons from './Buttons';
+import { Time } from './types/Time'
 import './App.scss';
 
-const App: React.FC = () => {
-  const [time, setTime] = useState({hours: 0, minutes: 0, seconds: 57});
-  const [ms, setMs] = useState(new Date().getTime());
-  const [switchTimer, setSwitchTimer] = useState(false);
 
-  const {hours, minutes, seconds} = time;
+
+const App: React.FC = () => {
+  const [time, setTime] = useState<Time>({hours: 0, minutes: 0, seconds: 0});
+  const [, setMs] = useState<number>(new Date().getTime());
+  const [runTime, setRunTime] = useState<boolean>(false);
 
   useEffect(() => {
     let timer: any;
 
-    if (switchTimer) {
+    if (runTime) {
       timer = setInterval(() => {
         setTime(({ hours, minutes, seconds }) => {
           return {hours, minutes, seconds: seconds + 1}
@@ -22,9 +25,11 @@ const App: React.FC = () => {
     }
 
     return () =>  clearInterval(timer)
-  }, [switchTimer]);
+  }, [runTime]);
 
   useEffect(() => {
+    const { minutes, seconds} = time;
+
     if (seconds === 60) {
       setTime(({ hours, minutes }) => {
         return {hours, minutes: minutes + 1, seconds: 0}
@@ -36,13 +41,13 @@ const App: React.FC = () => {
         return {hours: hours + 1, minutes: 0, seconds: 0}
       })
     }
-  })
+  }, [time])
 
   const pause = () => setMs((prevValue) => {
     const curentValue = new Date().getTime();
 
     if ((curentValue - prevValue) < 300) {
-      setSwitchTimer(false)
+      setRunTime(false)
     }
 
     return new Date().getTime()
@@ -53,64 +58,13 @@ const App: React.FC = () => {
       <h1 className="tittle">React Stopwatch</h1>
 
       <div className="stop-watch">
-        <div className="stop-watch__definitions">
-          <span className="stop-watch__definition">HH</span>
-          <span className="stop-watch__definition">MM</span>
-          <span className="stop-watch__definition">SS</span>
-        </div>
-
-        <div className="stop-watch__container">
-          <div className="stop-watch__number">
-            <span className="stop-watch__data">{hours < 10 ? '0' + hours : hours}</span>
-          </div>
-
-          <span className="stop-watch__separator">:</span>
-
-          <div className="stop-watch__number">
-            <span className="stop-watch__data">{minutes < 10 ? '0' + minutes : minutes}</span>
-          </div>
-
-          <span className="stop-watch__separator">:</span>
-
-          <div className="stop-watch__number">
-            <span className="stop-watch__data">{seconds < 10 ? '0' + seconds : seconds}</span>
-          </div>
-        </div>
-
-        <div className="stop-watch__buttons">
-          <button
-            type="submit"
-            className="stop-watch__button"
-            onClick={() => setSwitchTimer(true)}
-          >
-            Start
-          </button>
-
-          <button
-            type="submit"
-            className="stop-watch__button"
-            onClick={() => {setTime({hours: 0, minutes: 0, seconds: 0}); setSwitchTimer(false)}}
-          >
-            Stop
-          </button>
-
-          <button
-            type="submit"
-            className="stop-watch__button"
-            onClick={pause}
-          >
-            Wait
-          </button>
-
-          <button
-            type="submit"
-            className="stop-watch__button"
-            onClick={() => setTime({hours: 0, minutes: 0, seconds: 0})}
-          >
-            Reset
-          </button>
-
-        </div>
+        <Display time={time}/>
+        <Buttons
+          setRunTime={setRunTime}
+          setTime={setTime}
+          runTime={runTime}
+          pause={pause}
+        />
       </div>
     </>
     

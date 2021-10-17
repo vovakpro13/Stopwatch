@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-$gray: rgb(207, 212, 209);
+$gray: rgb(218, 240, 227);
 
 @mixin text {
   font-family: Helvetica, sans-serif, Arial;
@@ -29,9 +29,10 @@ body {
 
   background-color: $gray;
   margin: 0 auto;
+  border: 3px solid rgb(177, 212, 177);
   border-radius: 30px;
-  width: 600px;
-  height: 400px;
+  width: 550px;
+  height: 300px;
 
   &__container {
     display: flex;
@@ -43,9 +44,9 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: row;
-    gap: 85px;
+    gap: 78px;
 
-    margin-top: 40px;
+    margin-top: 25px;
   }
 
   &__definition {
@@ -74,5 +75,58 @@ body {
   &__separator {
     @include text;
   }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__button {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+
+    margin: 5px;
+    height: 50px;
+    width: 130px;
+  }
+
+  &__start {
+    background-color: green;
+
+    &:hover {
+    background-color: rgb(11, 109, 11);
+    box-shadow: 3px 3px 8px 0px rgba(34, 60, 80, 0.2);
+    }
+  }
+
+  &__stop {
+    background-color: rgb(230, 44, 44);
+
+    &:hover {
+      background-color: rgb(212, 25, 25);
+      box-shadow: 3px 3px 8px 0px rgba(34, 60, 80, 0.2);
+      }
+  }
+
+  &__wait {
+    background-color: rgb(201, 214, 16);
+
+    &:hover {
+      background-color: rgb(168, 179, 15);
+      box-shadow: 3px 3px 8px 0px rgba(34, 60, 80, 0.2);
+    }
+  }
+  &__reset {
+    background-color: rgb(21, 119, 247);
+
+    &:hover {
+      background-color: rgb(18, 95, 196);
+      box-shadow: 3px 3px 8px 0px rgba(34, 60, 80, 0.2);
+    }
+  }
 }
+
+
 
